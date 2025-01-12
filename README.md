@@ -35,7 +35,7 @@ This project is a part of a guided course from [boot.dev](https://boot.dev), des
    git clone https://github.com/yourusername/asteroids-game.git
    ```
 
-2. Set up a virtual environment
+2. Set up a virtual environment  
 In the project directory, create and activate a virtual environment:
    ``` 
    python -m venv venv
