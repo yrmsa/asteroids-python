@@ -1,14 +1,15 @@
 import pygame
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_SHOOT_COOLDOWN, PLAYER_SHOOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED, SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import PLAYER_HEALTH, PLAYER_RADIUS, PLAYER_SHOOT_COOLDOWN, PLAYER_SHOOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED, SCREEN_HEIGHT, SCREEN_WIDTH
 from shot import Shot
 
 class Player(CircleShape):
   def __init__(self, x, y):
     super().__init__(x, y, PLAYER_RADIUS)
-
+    self.invisible = 0
     self.rotation = 0
     self.timer = 0
+    self.health = PLAYER_HEALTH
   
   def triangle(self):
     forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -19,7 +20,11 @@ class Player(CircleShape):
     return [a, b, c]
   
   def draw(self, screen):
-    pygame.draw.polygon(screen, "#ffffff", self.triangle(), 2)
+    if self.invisible > 0:
+      if int(self.invisible * 20) % 2 == 0:
+        pygame.draw.polygon(screen, "#ffffff", self.triangle(), 2)
+    else:
+      pygame.draw.polygon(screen, "#ffffff", self.triangle(), 2)
 
   def rotate(self, dt):
     self.rotation += PLAYER_TURN_SPEED * dt
@@ -44,6 +49,7 @@ class Player(CircleShape):
   def update(self, dt):
     keys = pygame.key.get_pressed()
     self.timer -= dt
+    self.invisible -= dt
 
     if keys[pygame.K_a]:
       self.rotate(dt * -1)

@@ -15,6 +15,22 @@ def create_text_box(font, text, text_color, box_color, margin_x=0, margin_y=0):
   box_surf.blit(text_surf, text_surf.get_rect(center = box_surf.get_rect().center))
   return box_surf
 
+def display_ui_elements(screen, font, score, player, asteroid_count):
+    # Define the elements and their initial positions
+    ui_elements = [
+      {"text": f"Score: {score}", "color": "#000000", "bg_color": "#ffffff", "pos": (5, 10)},
+      {"text": f"Asteroids: {asteroid_count}", "color": "#000000", "bg_color": "#ffffff", "pos": (0, 10)},  # x=0 will be adjusted later
+      {"text": f"Health: {player.health}", "color": "#000000", "bg_color": "#ffffff", "pos": (0, 10)}  # x=0 will be adjusted later
+    ]
+
+    # Calculate positions dynamically, adjust x position for each element
+    x_offset = 5  # Starting x position
+    for element in ui_elements:
+      text_surf = create_text_box(font, element["text"], element["color"], element["bg_color"], 10, 5)
+      element["pos"] = (x_offset, element["pos"][1])  # Set x position dynamically
+      screen.blit(text_surf, text_surf.get_rect(topleft=element["pos"]))
+      x_offset += text_surf.get_width() + 10  # Move x_offset to the right for the next element
+
 def handle_game_over(font, screen):
   """
   Displays the game over screen and waits for player input to exit.
@@ -77,15 +93,12 @@ def main():
     "color": "#000000",
     "bg_color": "#ffffff"
   }
-  score_text_surf = create_text_box(font, score_info["text"], score_info["color"], score_info["bg_color"], 10, 5)
-  asteroid_counter_text_surf = create_text_box(font, f"Asteroid: {Asteroid.counter}", "white", "white", 10, 5)
   ship_crashed = False
 
   while True:
     screen.fill("#000000")
     screen.blit(welcome_text_surf, welcome_text_surf.get_rect(centerx=SCREEN_WIDTH/2, y=SCREEN_HEIGHT/4))
-    screen.blit(score_text_surf, score_text_surf.get_rect(x=5, y=10))
-    screen.blit(asteroid_counter_text_surf, asteroid_counter_text_surf.get_rect(x=score_text_surf.get_rect().right + 10, y=10))
+    display_ui_elements(screen, font, score, player, Asteroid.counter)
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -99,8 +112,15 @@ def main():
           welcome_text_surf.set_alpha(welcome_text_surf.get_alpha() - 0.1)
       
     for asteroid in asteroids:
-      if asteroid.collides_with(player):
-        ship_crashed = True
+      if asteroid.collides_with(player) and player.invisible <= 0:
+
+        player.health -= 1
+        player.invisible = 1
+        player_health_text_surf = create_text_box(font, f"Health: {player.health}", "Black", "White", 10, 5)
+
+
+        if player.health == 0:
+          ship_crashed = True
 
       for shot in shots:
         if asteroid.collides_with(shot):
