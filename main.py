@@ -7,7 +7,7 @@ from constants import *
 from player import Player
 from shot import Shot
 
-def create_text_box(font, text, text_color, box_color, margin_x, margin_y):
+def create_text_box(font, text, text_color, box_color, margin_x=0, margin_y=0):
   text_surf = font.render(text, True, text_color)
   box_surf = pygame.Surface(text_surf.get_rect().inflate(margin_x, margin_y).size)
   box_surf.fill(box_color)
@@ -26,7 +26,7 @@ def handle_game_over(font, screen):
   y_pos = SCREEN_HEIGHT / 2
 
   for text in game_over_text:
-      game_over_surf = create_text_box(font, text, "white", "black", 0, 0)
+      game_over_surf = create_text_box(font, text, "white", "black")
       screen.blit(game_over_surf, game_over_surf.get_rect(centerx=SCREEN_WIDTH / 2, y=y_pos))
       y_pos += font.get_height()
 
@@ -70,7 +70,7 @@ def main():
   screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
   font = pygame.font.Font(None, 32)
-  welcome_text_surf = create_text_box(font, "Asteroids - Pew, Pew, Pew!", "white", "black", 0, 0)
+  welcome_text_surf = create_text_box(font, "Asteroids - Pew, Pew, Pew!", "white", "black")
 
   score_info = {
     "text": f"Score: {score}",
