@@ -78,12 +78,14 @@ def main():
     "bg_color": "#ffffff"
   }
   score_text_surf = create_text_box(font, score_info["text"], score_info["color"], score_info["bg_color"], 10, 5)
+  asteroid_counter_text_surf = create_text_box(font, f"Asteroid: {Asteroid.counter}", "white", "white", 10, 5)
   ship_crashed = False
 
   while True:
     screen.fill("#000000")
     screen.blit(welcome_text_surf, welcome_text_surf.get_rect(centerx=SCREEN_WIDTH/2, y=SCREEN_HEIGHT/4))
-    screen.blit(score_text_surf, score_text_surf.get_rect(centerx=55, y=10))
+    screen.blit(score_text_surf, score_text_surf.get_rect(x=5, y=10))
+    screen.blit(asteroid_counter_text_surf, asteroid_counter_text_surf.get_rect(x=score_text_surf.get_rect().right + 10, y=10))
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -92,6 +94,7 @@ def main():
     for obj in updatable:
       if not ship_crashed:
         obj.update(dt)
+        asteroid_counter_text_surf = create_text_box(font, f"Asteroid: {Asteroid.counter}", "black", "white", 10, 5)
         if welcome_text_surf.get_alpha() > 0:
           welcome_text_surf.set_alpha(welcome_text_surf.get_alpha() - 0.1)
       
