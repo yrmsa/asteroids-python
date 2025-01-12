@@ -7,7 +7,7 @@ This project is a part of a guided course from [boot.dev](https://boot.dev), des
 ## 🚀 Features
 
 - **Space Combat**: Engage in fast-paced space battles against incoming asteroids.
-- **Challenging Levels**: Face progressively difficult waves of asteroids, each more challenging than the last.
+- **Challenging Levels (COMING SOON)**: Face progressively difficult waves of asteroids, each more challenging than the last.
 - **Smooth Controls**: Easy-to-learn, intuitive controls for thrilling space navigation.
 - **OOP Architecture**: Clean, modular code structured around OOP principles to ensure maintainability and scalability.
 
@@ -15,7 +15,7 @@ This project is a part of a guided course from [boot.dev](https://boot.dev), des
 
 - As a pilot in 2531 A.D., you’ll control a spacecraft that must destroy or avoid asteroids to survive.
 - Use your weapons (pew, pew!) to break apart asteroids and clear a path through the debris.
-- Keep an eye on your health and ammo – once your ship is destroyed, it's game over!
+- Keep an eye on your health and ammo **(COMING SOON)** – once your ship is destroyed, it's game over!
 
 ## 🛠️ Technologies
 
